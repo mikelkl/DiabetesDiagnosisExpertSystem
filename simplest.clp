@@ -51,11 +51,19 @@
   (assert (info-pregnant no))
   )
 
-  (defrule collected-info
-     (info-gender ?)
-     (info-pregnant ?)
-    => (assert (collected-info yes))
-    )
+(defrule collect-info-age
+  (not (info-age ?))
+  (not (result ?))
+  =>
+  (assert (info-age (yes-or-no-p "Are you >=20 years old (yes/no)?"))))
+
+
+(defrule collected-info
+   (info-gender ?)
+   (info-pregnant ?)
+   (info-age ?)
+  => (assert (collected-info yes))
+  )
 
 ;;;******************************************************************************************
 ;;;* QUERY SYMPTOMS *
@@ -167,6 +175,101 @@
   (assert (result-factors yes))
 )
 
+;;;******************************************************************************************
+;;;* QUERY TEST RESULS *
+;;;******************************************************************************************
+
+(defrule collect-fpg
+    (not (result ?))
+    (not (test-fpg ?))
+    (info-pregnant no)
+    =>
+    (assert (test-fpg (yes-or-no-p "Is your Fasting Plasma Glucose (FPG) test showing >= 7.0mmol/l (yes/no)?")))
+)
+
+(defrule collect-cpg
+    (not (result ?))
+    (not (test-cpg ?))
+    (info-pregnant no)
+    =>
+    (assert (test-cpg (yes-or-no-p "Is your Casual Plasma Glucose (FPG) test showing >= 11.1mmol/l (yes/no)?")))
+)
+
+(defrule collect-ogtt-non-pregnant
+    (not (result ?))
+    (not (test-ogtt ?))
+    (info-pregnant no)
+    =>
+    (assert (test-ogtt (yes-or-no-p "Is your 2-hour post Oral Glucose Tolerance (OGTT) test showing >= 11.1mmol/l (yes/no)?")))
+)
+
+(defrule collect-ogtt-pregnant
+    (not (result ?))
+    (not (test-ogtt ?))
+    (info-pregnant yes)
+    =>
+    (assert (test-ogtt (yes-or-no-p "Is your 2-hour post Oral Glucose Tolerance (OGTT) test showing >= 7.8mmol/l (yes/no)?")))
+)
+
+(defrule collected-tests-pregnant
+  (info-pregnant yes)
+  (test-ogtt ?)
+  =>
+  (assert (collected-tests yes))
+)
+
+(defrule collected-tests-non-pregnant
+  (info-pregnant no)
+  (test-cpg ?)
+  (test-fpg ?)
+  (test-ogtt ?)
+  =>
+  (assert (collected-tests yes))
+)
+
+(defrule assert-test-pregnant-gestational
+  (info-pregnant yes)
+  (test-ogtt yes)
+  =>
+  (assert (result-test gestational))
+)
+
+(defrule assert-test-pregnant-healthy
+  (info-pregnant yes)
+  (test-ogtt no)
+  =>
+  (assert (result-test healthy))
+)
+
+(defrule assert-test-non-pregnant-unhealthy
+  (info-pregnant no)
+  (or
+     (and (test-fpg yes) (test-ogtt yes))
+     (and (test-fpg yes) (test-cpg yes))
+  )
+  =>
+  (assert (result-test unhealthy))
+)
+
+(defrule assert-test-non-pregnant-consideration
+  (info-pregnant no)
+  (or
+     (and (test-fpg yes) (test-ogtt no) (test-cpg no))
+     (and (test-fpg no) (test-ogtt yes) (test-cpg no))
+     (and (test-fpg no) (test-ogtt no) (test-cpg yes))
+  )
+  =>
+  (assert (result-test consideration))
+)
+
+(defrule assert-test-non-pregnant-healthy
+  (info-pregnant no)
+  (test-fpg no)
+  (test-ogtt no)
+  (test-cpg no)
+  =>
+  (assert (result-test healthy))
+)
 
 ;;;******************************************************************************************
 ;;;* ASSERT RESULTS *
@@ -178,8 +281,10 @@
    (collected-info yes)
    (collected-symptoms yes)
    (collected-factors yes)
+   (collected-tests yes)
    (not (result-symptom yes))
    (not (result-factors yes))
+   (result-test healthy)
    =>
    (assert (result "Healthy.")))
 
@@ -189,10 +294,12 @@
       (collected-info yes)
       (collected-symptoms yes)
       (collected-factors yes)
+      (collected-tests yes)
       (not (result-symptom yes))
       (result-factors yes)
+      (result-test healthy)
       =>
-      (assert (result "Showing some risk factors. At Risk.")))
+      (assert (result "Showing some risk factors. Test ok. At Risk.")))
 
 (defrule result-at-risk-2 ""
    (declare (salience -10))
@@ -200,10 +307,12 @@
    (collected-info yes)
    (collected-symptoms yes)
    (collected-factors yes)
+   (collected-tests yes)
    (result-symptom yes)
    (result-factors yes)
+   (result-test healthy)
    =>
-   (assert (result "Showing symptoms and risk factors. At risk.")))
+   (assert (result "Showing symptoms and risk factors. Test ok. At risk.")))
 
 (defrule result-more-consider ""
    (declare (salience -10))
@@ -211,10 +320,98 @@
       (collected-info yes)
       (collected-symptoms yes)
       (collected-factors yes)
+      (collected-tests yes)
       (result-symptom yes)
       (not (result-factors yes))
+      (result-test healthy)
       =>
       (assert (result "Showing symptoms but having no risk factors. Need more consideration.")))
+
+(defrule result-diabetes-1 ""
+   (declare (salience -10))
+      (not (result ?))
+      (collected-info yes)
+      (collected-symptoms yes)
+      (collected-factors yes)
+      (collected-tests yes)
+      (result-symptom yes)
+      ;(not (result-factors yes))
+      (result-test unhealthy)
+      (info-pregnant no)
+      (info-age no)
+      =>
+      (assert (result "Non-pregnant, less than 20 yrs old. Diabetes symptoms. Failed at least 2 tests. Diabetes Type I")))
+
+(defrule result-diabetes-2 ""
+   (declare (salience -10))
+      (not (result ?))
+      (collected-info yes)
+      (collected-symptoms yes)
+      (collected-factors yes)
+      (collected-tests yes)
+      (result-symptom yes)
+      ;(not (result-factors yes))
+      (result-test unhealthy)
+      (info-pregnant no)
+      (info-age yes)
+      =>
+      (assert (result "Non-pregnant, >=20 yrs old. Diabetes symptoms. Failed at least 2 tests. Diabetes Type II")))
+
+(defrule result-diabetes-gestational ""
+   (declare (salience -10))
+      (not (result ?))
+      (collected-info yes)
+      (collected-symptoms yes)
+      (collected-factors yes)
+      (collected-tests yes)
+      (result-symptom yes)
+      ;(not (result-factors yes))
+      (result-test gestational)
+      (info-pregnant yes)
+      =>
+      (assert (result "Pregnant. Diabetes symptoms. Test show unhealthy gestational. Gestational Diabetes")))
+
+(defrule result-consideration-1 ""
+   (declare (salience -10))
+      (not (result ?))
+      (collected-info yes)
+      (collected-symptoms yes)
+      (collected-factors yes)
+      (collected-tests yes)
+      (result-symptom no)
+      ;(not (result-factors yes))
+      (result-test gestational)
+      (info-pregnant yes)
+      =>
+      (assert (result "Pregnant. No Diabetes symptoms. Test show unhealthy gestational. More consideration")))
+
+(defrule result-consideration-2 ""
+   (declare (salience -10))
+      (not (result ?))
+      (collected-info yes)
+      (collected-symptoms yes)
+      (collected-factors yes)
+      (collected-tests yes)
+      (result-symptom no)
+      ;(not (result-factors yes))
+      (result-test unhealthy)
+      (info-pregnant no)
+      =>
+      (assert (result "No Pregnant. No Diabetes symptoms. Test show unhealthy. More consideration")))
+
+(defrule  result-consideration-3 ""
+   (declare (salience -10))
+      (not (result ?))
+      (collected-info yes)
+      (collected-symptoms yes)
+      (collected-factors yes)
+      (collected-tests yes)
+      (result-symptom no)
+      ;(not (result-factors yes))
+      (result-test consideration)
+      (info-pregnant no)
+      =>
+      (assert (result "No Pregnant. No Diabetes symptoms. Test show more consideration. More consideration")))
 
 ;;;********************************
 ;;;* STARTUP AND CONCLUSION RULES *
@@ -224,7 +421,7 @@
   (declare (salience 10))
   =>
   (printout t crlf crlf)
-  (printout t "The Diabetes Diagnosis Expert System")
+  (printout t "The Diabetes Diagnosis Expert System Ble Ble Ble")
   (printout t crlf crlf))
 
 (defrule print-diagnosis ""
