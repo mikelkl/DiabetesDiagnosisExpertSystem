@@ -54,11 +54,11 @@
   (assert (info-pregnant no))
   )
 
-(defrule collected-info
-  (forall (info-gender ?collected)
-          (info-pregnant ?collected))
-  => (assert (collected-info yes))
-  )
+  (defrule collected-info
+     (info-gender ?)
+     (info-pregnant ?)
+    => (assert (collected-info yes))
+    )
 
 ;;;* QUERY SYMPTOMS *
 (defrule collect-symp-ex-urinate
@@ -83,8 +83,8 @@
 )
 
 (defrule collected-symptoms
-  (forall (symp-ex-urinate ?collected)
-          (symp-polydipsia ?collected))
+  (symp-ex-urinate ?)
+  (symp-polydipsia ?)
   =>
   (assert (collected-symptoms yes))
 )
