@@ -195,3 +195,63 @@
   =>
   (assert (risk-factors healthy))
 )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;Test question ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;; User: Pregnant
+(defrule pregnant
+  (declare (salience -5))   
+  (user-gender F)
+  =>      
+  (printout t "Are you Pregnant?(yes/no)" crlf)      
+  (bind ?answer (read))
+  (assert (user-pregnant ?answer))
+)
+
+;;; Test: 2-hour post Oral Glucose Tolerance Test (OGTT)
+(defrule ogtt
+  (declare (salience -6))
+  (user-gender F)
+  (user-pregnant yes)
+  =>      
+  (printout t "What's your 2-hour post Oral Glucose Tolerance Test (mmol/l)?" crlf)      
+  (bind ?answer (read))
+  (if (>= ?answer 7.8)
+      then
+      (assert (test unhealthy-gestational))
+      else
+      (assert (test healthy)))
+)
+
+;;; Test: Casual Plasma Glucose (CPG) & Casual Plasma Glucose (CPG)
+(defrule cpf_cpg
+  (declare (salience -7))
+  (or (user-gender M)
+    (user-pregnant no)
+  )
+  =>      
+  (printout t "What's your Fasting Plasma Glucose (mmol/l)?" crlf)      
+  (bind ?answer1 (read))
+  (if (>= ?answer 7.0)
+      then
+      (assert (test-fpg yes))
+      else
+      (assert (test-fpg no)))
+
+  (printout t "What's your Casual Plasma Glucose (mmol/l)?" crlf)      
+  (bind ?answer2 (read))
+  (if (and (>= ?answer 7.0) (>= ?answer2 11.1))
+      then
+      (assert (test unhealthy)))
+  (if (and (< ?answer 7.0) (< ?answer2 11.1))
+      then
+      (assert (test healthy)))
+  (if (and (>= ?answer 7.0) (< ?answer2 11.1))
+      then
+      (assert (test more-consideration)))
+  (if (and (< ?answer 7.0) (>= ?answer2 11.1))
+      then
+      (assert (test more-consideration)))
+)
