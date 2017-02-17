@@ -253,21 +253,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;; Desicion Result ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+(deffunction family (?cf-h ?cf-r ?cf-I ?cf-II ?cf-g ?cf-m)
+  (printout t crlf "Our diagnosis is as follows :")
+  (printout t crlf "Healthy: " (integer (* ?cf-h 100)) "%")
+  (printout t crlf "At Risk: " (integer (* ?cf-r 100)) "%")
+  (printout t crlf "Diabetes Type I: " (integer (* ?cf-I 100)) "%")
+  (printout t crlf "Diabetes Type II: " (integer (* ?cf-II 100)) "%")
+  (printout t crlf "Gestational Diabetes: " (integer (* ?cf-g 100)) "%" crlf)
+  (printout t crlf "More Consideration: " (integer (* ?cf-m 100)) "%" crlf)
+  (assert (result (healthy ?cf-h) (at-risk ?cf-r) (diabetes-type-I ?cf-I) (diabetes-type-II ?cf-II) (gestational-diabetes ?cf-g)
+    (more-consideration ?cf-m)))
+)
+
 ;;; create diagnosis result
 (defrule diagnosis_healthy
   (Test healthy)
   (symp healthy)
   (risk-factors healthy)
   =>
-  (assert (result (healthy 1) (at-risk 0) (diabetes-type-I 0) (diabetes-type-II 0) (gestational-diabetes 0)
-    (more-consideration 0)))
-  (printout t crlf "Our diagnosis is as follows :")
-  (printout t crlf "Healthy: " (integer (* 1 100)) "%")
-  (printout t crlf "At Risk: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type I: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type II: " (integer (* 0 100)) "%")
-  (printout t crlf "Gestational Diabetes: " (integer (* 0 100)) "%" crlf)
-  (printout t crlf "More Consideration: " (integer (* 0 100)) "%" crlf)
+  (family 1 0 0 0 0 0)
 )
 
 (defrule diagnosis_at_risk
@@ -275,15 +280,7 @@
   (symp healthy)
   (risk-factors at-risk)
   =>
-  (assert (result (healthy 0) (at-risk 1) (diabetes-type-I 0) (diabetes-type-II 0) (gestational-diabetes 0)
-    (more-consideration 0)))
-  (printout t crlf "Our diagnosis is as follows :")
-  (printout t crlf "Healthy: " (integer (* 0 100)) "%")
-  (printout t crlf "At Risk: " (integer (* 1 100)) "%")
-  (printout t crlf "Diabetes Type I: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type II: " (integer (* 0 100)) "%")
-  (printout t crlf "Gestational Diabetes: " (integer (* 0 100)) "%" crlf)
-  (printout t crlf "More Consideration: " (integer (* 0 100)) "%" crlf)
+  (family 0 1 0 0 0 0)
 )
 
 (defrule diagnosis_diabetes_type_I
@@ -293,15 +290,7 @@
   (user-age no)
   (symp diabetes)
   =>
-  (assert (result (healthy 0) (at-risk 0) (diabetes-type-I 1) (diabetes-type-II 0) (gestational-diabetes 0)
-    (more-consideration 0)))
-  (printout t crlf "Our diagnosis is as follows :")
-  (printout t crlf "Healthy: " (integer (* 0 100)) "%")
-  (printout t crlf "At Risk: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type I: " (integer (* 1 100)) "%")
-  (printout t crlf "Diabetes Type II: " (integer (* 0 100)) "%")
-  (printout t crlf "Gestational Diabetes: " (integer (* 0 100)) "%" crlf)
-  (printout t crlf "More Consideration: " (integer (* 0 100)) "%" crlf)
+  (family 0 0 1 0 0 0)
 )
 
 (defrule diagnosis_diabetes_type_II
@@ -309,15 +298,7 @@
   (user-age yes)
   (symp diabetes)
   =>
-  (assert (result (healthy 0) (at-risk 0) (diabetes-type-I 0) (diabetes-type-II 1) (gestational-diabetes 0)
-    (more-consideration 0)))
-  (printout t crlf "Our diagnosis is as follows :")
-  (printout t crlf "Healthy: " (integer (* 0 100)) "%")
-  (printout t crlf "At Risk: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type I: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type II: " (integer (* 1 100)) "%")
-  (printout t crlf "Gestational Diabetes: " (integer (* 0 100)) "%" crlf)
-  (printout t crlf "More Consideration: " (integer (* 0 100)) "%" crlf)
+  (family 0 0 0 1 0 0)
 )
 
 (defrule diagnosis_gestational_diabetes
@@ -325,15 +306,7 @@
   (user-pregnant no)
   (symp diabetes)
   =>
-  (assert (result (healthy 0) (at-risk 0) (diabetes-type-I 0) (diabetes-type-II 0) (gestational-diabetes 1)
-    (more-consideration 0)))
-  (printout t crlf "Our diagnosis is as follows :")
-  (printout t crlf "Healthy: " (integer (* 0 100)) "%")
-  (printout t crlf "At Risk: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type I: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type II: " (integer (* 0 100)) "%")
-  (printout t crlf "Gestational Diabetes: " (integer (* 1 100)) "%" crlf)
-  (printout t crlf "More Consideration: " (integer (* 0 100)) "%" crlf)
+  (family 0 0 0 0 1 0)
 )
 
 (defrule diagnosis_more_consideration
@@ -351,13 +324,5 @@
       (Test more-consideration)
   )
   =>
-  (assert (result (healthy 0) (at-risk 0) (diabetes-type-I 0) (diabetes-type-II 0) (gestational-diabetes 0)
-    (more-consideration 1)))
-  (printout t crlf "Our diagnosis is as follows :")
-  (printout t crlf "Healthy: " (integer (* 0 100)) "%")
-  (printout t crlf "At Risk: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type I: " (integer (* 0 100)) "%")
-  (printout t crlf "Diabetes Type II: " (integer (* 0 100)) "%")
-  (printout t crlf "Gestational Diabetes: " (integer (* 0 100)) "%" crlf)
-  (printout t crlf "More Consideration: " (integer (* 1 100)) "%" crlf)
+  (family 0 0 0 0 0 1)
 )
