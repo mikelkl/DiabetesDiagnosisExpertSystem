@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Diabetes Diagnosis Expert System</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <section class="lgt-grid">
+            <fieldset id="user-question">
+                <legend>Personal information</legend>
+                <div class="lgt-input-group">
+                    Name: <input name="name" type="text" onblur="getValue(this)" autocomplete="off"/>
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Age: <input name="age" type="text" onblur="getValue(this)" autocomplete="off"/>
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Gender: <input type="radio" name="gender" value="male" onblur="getValue(this)"> Male
+                    <input type="radio" name="gender" value="female" onblur="getValue(this)"> Female
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Pregnant: <input type="radio" name="pregnant" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="pregnant" onblur="getValue(this)" value="no"> No
+                    <span class="lgt-error"></span>
+                </div>
+            </fieldset>
+            
+            <fieldset id="test-question" style="display: none;">
+                <legend>Test Question</legend>
+                <div class="lgt-input-group" id="ogtt-group">
+                    OGTT Value: <input name="ogtt" type="text" onblur="getValue(this)" autocomplete="off"/>
+                    <span class="lgt-error"></span>
+                </div>
+            </fieldset>
+            
+            <fieldset id="risk-factor-question" style="display: none;">
+                <legend>Risk Factors Question</legend>
+                <div class="lgt-input-group">
+                    Obesity: <input type="radio" name="obesity" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="obesity" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Blood Pressure: <input name="blood-pressure" type="text" onblur="getValue(this)"/>
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Family history of diabetes: <input type="radio" name="family-history" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="family-history" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Rate of Triglyceridges (TG - one of the cholesterol): <input type="radio" name="TG" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="TG" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Low Physical Activity (less than 3 times per week): <input type="radio" name="low-activity" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="low-activity" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Impaired Glucose Tolerance in Previous Tests: <input type="radio" name="IGT" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="IGT" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Fasting Plasma Glucose result between 6.1 to 6.9 mmol/l: <input type="radio" name="FPG-result" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="FPG-result" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+            </fieldset>
+            
+            <fieldset id="symp-question" style="display: none;">
+                <legend>Symptoms Question</legend>
+                <div class="lgt-input-group">
+                    Headache: <input type="radio" name="headache" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="headache" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Blur of Vision: <input type="radio" name="BV" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="BV" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Excessive Urination: <input type="radio" name="EU" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="EU" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Polydipsia (mean increased thirst): <input type="radio" name="polydipsia" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="polydipsia" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Loss of Consciousness: <input type="radio" name="LC" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="LC" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Nausea & Vomiting: <input type="radio" name="NV" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="NV" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Polyphagia (Feeling Hungry): <input type="radio" name="polyphagia" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="polyphagia" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Tiredness: <input type="radio" name="tiredness" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="tiredness" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Losing Weight without Reason: <input type="radio" name="LW" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="LW" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Fraction & Skin Tag: <input type="radio" name="FST" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="FST" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Frequent Infections: <input type="radio" name="FI" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="FI" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Loss of Sensation in Hands and Feet: <input type="radio" name="sensation" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="sensation" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+                <div class="lgt-input-group">
+                    Cold Sweat: <input type="radio" name="cold-sweat" value="yes" onblur="getValue(this)"> Yes
+                    <input type="radio" name="cold-sweat" value="no" onblur="getValue(this)"> No
+                    <span class="lgt-error"></span>
+                </div>
+            </fieldset>
+            
+            <button id="next">Next</button>
+        </section>
+        
+        <script src="./js/index.js"></script>
+        <script>
+        </script>
+    </body>
+</html>
