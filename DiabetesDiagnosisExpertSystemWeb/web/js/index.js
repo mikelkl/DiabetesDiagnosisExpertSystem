@@ -4,25 +4,170 @@
  * and open the template in the editor.
  */
 
-// attribute
-let name;
-let age;
+// When user refresh the page, 
+// browser will auto complete 
+// field with last value.
+// Thus, attributes should
+// be initialized at decleration stage.
+let name = document.getElementsByName("name")[0].value;
+let age = document.getElementsByName("age")[0].value;
 let gender;
+if (document.getElementsByName("gender")[0].checked) {
+    gender = document.getElementsByName("gender")[0].value;
+}
+if (document.getElementsByName("gender")[1].checked) {
+    gender = document.getElementsByName("gender")[1].value;
+}
 let pregnant;
-let ogtt;
-let fpg;
-let cpg;
+if (document.getElementsByName("pregnant")[0].checked) {
+    pregnant = document.getElementsByName("pregnant")[0].value;
+}
+if (document.getElementsByName("pregnant")[1].checked) {
+    pregnant = document.getElementsByName("pregnant")[1].value;
+}
+let OGTT = document.getElementsByName("OGTT")[0].value;
+let FPG;
+let CPG;
 let obesity;
-let bloodPressure;
+if (document.getElementsByName("obesity")[0].checked) {
+    obesity = document.getElementsByName("obesity")[0].value;
+}
+if (document.getElementsByName("obesity")[1].checked) {
+    obesity = document.getElementsByName("obesity")[1].value;
+}
+let bloodPressure = document.getElementsByName("blood-pressure")[0].value;
 let familyHistory;
+if (document.getElementsByName("family-history")[0].checked) {
+    familyHistory = document.getElementsByName("family-history")[0].value;
+}
+if (document.getElementsByName("family-history")[1].checked) {
+    familyHistory = document.getElementsByName("family-history")[1].value;
+}
 let TG;
+if (document.getElementsByName("TG")[0].checked) {
+    TG = document.getElementsByName("TG")[0].value;
+}
+if (document.getElementsByName("TG")[1].checked) {
+    TG = document.getElementsByName("TG")[1].value;
+}
 let lowActivity;
+if (document.getElementsByName("low-activity")[0].checked) {
+    lowActivity = document.getElementsByName("low-activity")[0].value;
+}
+if (document.getElementsByName("low-activity")[1].checked) {
+    lowActivity = document.getElementsByName("low-activity")[1].value;
+}
 let IGT;
+if (document.getElementsByName("IGT")[0].checked) {
+    IGT = document.getElementsByName("IGT")[0].value;
+}
+if (document.getElementsByName("IGT")[1].checked) {
+    IGT = document.getElementsByName("IGT")[1].value;
+}
 let FPGResult;
+if (document.getElementsByName("FPG-result")[0].checked) {
+    FPGResult = document.getElementsByName("FPG-result")[0].value;
+}
+if (document.getElementsByName("FPG-result")[1].checked) {
+    FPGResult = document.getElementsByName("FPG-result")[1].value;
+}
 let gestational;
 let POS;
+let headache;
+if (document.getElementsByName("headache")[0].checked) {
+    headache = document.getElementsByName("headache")[0].value;
+}
+if (document.getElementsByName("headache")[1].checked) {
+    headache = document.getElementsByName("headache")[1].value;
+}
+let BV;
+if (document.getElementsByName("BV")[0].checked) {
+    BV = document.getElementsByName("BV")[0].value;
+}
+if (document.getElementsByName("BV")[1].checked) {
+    BV = document.getElementsByName("BV")[1].value;
+}
+let EU;
+if (document.getElementsByName("EU")[0].checked) {
+    EU = document.getElementsByName("EU")[0].value;
+}
+if (document.getElementsByName("EU")[1].checked) {
+    EU = document.getElementsByName("EU")[1].value;
+}
+let polydipsia;
+if (document.getElementsByName("polydipsia")[0].checked) {
+    polydipsia = document.getElementsByName("polydipsia")[0].value;
+}
+if (document.getElementsByName("polydipsia")[1].checked) {
+    polydipsia = document.getElementsByName("polydipsia")[1].value;
+}
+let LC;
+if (document.getElementsByName("LC")[0].checked) {
+    LC = document.getElementsByName("LC")[0].value;
+}
+if (document.getElementsByName("LC")[1].checked) {
+    LC = document.getElementsByName("LC")[1].value;
+}
+let NV;
+if (document.getElementsByName("NV")[0].checked) {
+    NV = document.getElementsByName("NV")[0].value;
+}
+if (document.getElementsByName("NV")[1].checked) {
+    NV = document.getElementsByName("NV")[1].value;
+}
+let polyphagia;
+if (document.getElementsByName("polyphagia")[0].checked) {
+    polyphagia = document.getElementsByName("polyphagia")[0].value;
+}
+if (document.getElementsByName("polyphagia")[1].checked) {
+    polyphagia = document.getElementsByName("polyphagia")[1].value;
+}
+let tiredness;
+if (document.getElementsByName("tiredness")[0].checked) {
+    tiredness = document.getElementsByName("tiredness")[0].value;
+}
+if (document.getElementsByName("tiredness")[1].checked) {
+    tiredness = document.getElementsByName("tiredness")[1].value;
+}
+let LW;
+if (document.getElementsByName("LW")[0].checked) {
+    LW = document.getElementsByName("LW")[0].value;
+}
+if (document.getElementsByName("LW")[1].checked) {
+    LW = document.getElementsByName("LW")[1].value;
+}
+let FST;
+if (document.getElementsByName("FST")[0].checked) {
+    FST = document.getElementsByName("FST")[0].value;
+}
+if (document.getElementsByName("FST")[1].checked) {
+    FST = document.getElementsByName("FST")[1].value;
+}
+let FI;
+if (document.getElementsByName("FI")[0].checked) {
+    FI = document.getElementsByName("FI")[0].value;
+}
+if (document.getElementsByName("FI")[1].checked) {
+    FI = document.getElementsByName("FI")[1].value;
+}
+let sensation;
+if (document.getElementsByName("sensation")[0].checked) {
+    sensation = document.getElementsByName("sensation")[0].value;
+}
+if (document.getElementsByName("sensation")[1].checked) {
+    sensation = document.getElementsByName("sensation")[1].value;
+}
+let coldWweat;
+if (document.getElementsByName("cold-sweat")[0].checked) {
+    coldWweat = document.getElementsByName("cold-sweat")[0].value;
+}
+if (document.getElementsByName("cold-sweat")[1].checked) {
+    coldWweat = document.getElementsByName("cold-sweat")[1].value;
+}
 
 let next = document.querySelector("#next"); // next button
+next.addEventListener('click', nextHandler);
+
 let container = document.querySelector("section"); // top container
 let fieldsets = document.querySelectorAll("fieldset"); // select all question fields
 let count = 0;
@@ -42,13 +187,12 @@ function nextHandler() {
                 FPGDIV.class = "lgt-input-group";
                 FPGDIV.textContent = "FPG Value: ";
                 let FPGInput = document.createElement("input");
-                FPGInput.name = "fpg";
+                FPGInput.name = "FPG";
                 FPGInput.type = "text";
                 // bind listen event
                 FPGInput.onblur = function() {
                     getValue(this);
                 };
-                FPGInput.autocomplete = "off";
                 FPGDIV.appendChild(FPGInput);
                 FPGDIV.appendChild(errorSpan);
                 testField.appendChild(FPGDIV);
@@ -58,13 +202,12 @@ function nextHandler() {
                 CPGDIV.class = "lgt-input-group";
                 CPGDIV.textContent = "CPG Value: ";
                 let CPGInput = document.createElement("input");
-                CPGInput.name = "cpg";
+                CPGInput.name = "CPG";
                 CPGInput.type = "text";
                 // bind listen event
                 CPGInput.onblur = function() {
                     getValue(this);
                 };
-                CPGInput.autocomplete = "off";
                 CPGDIV.appendChild(CPGInput);
                 CPGDIV.appendChild(errorSpan);
                 testField.appendChild(CPGDIV);
@@ -75,9 +218,6 @@ function nextHandler() {
 
             // the follwing questions only for women
             if (gender === 'female') {
-                let yesText = document.createTextNode(" Yes");
-                let noText = document.createTextNode(" No");
-                
                 // append History of gestational diabetes or Having Baby with over 4 Kg weight (female only) div
                 let gestationalDIV = document.createElement("div");
                 gestationalDIV.class = "lgt-input-group";
@@ -91,7 +231,7 @@ function nextHandler() {
                     getValue(this);
                 };
                 gestationalDIV.appendChild(gestationalInputRadio1);
-                gestationalDIV.appendChild(yesText);
+                gestationalDIV.appendChild(document.createTextNode(" Yes"));
                 
                 let gestationalInputRadio2 = document.createElement("input");
                 gestationalInputRadio2.name = "gestational";
@@ -102,7 +242,7 @@ function nextHandler() {
                     getValue(this);
                 };
                 gestationalDIV.appendChild(gestationalInputRadio2);
-                gestationalDIV.appendChild(noText);
+                gestationalDIV.appendChild(document.createTextNode(" No"));
                 gestationalDIV.appendChild(errorSpan);
                 riskFactorField.appendChild(gestationalDIV);
                 
@@ -119,7 +259,7 @@ function nextHandler() {
                     getValue(this);
                 };
                 POSDIV.appendChild(POSInputRadio1);
-                POSDIV.appendChild(yesText);
+                POSDIV.appendChild(document.createTextNode(" Yes"));
                 
                 let POSInputRadio2 = document.createElement("input");
                 POSInputRadio2.name = "POS";
@@ -130,13 +270,17 @@ function nextHandler() {
                     getValue(this);
                 };
                 POSDIV.appendChild(POSInputRadio2);
-                POSDIV.appendChild(noText);
+                POSDIV.appendChild(document.createTextNode(" No"));
                 POSDIV.appendChild(errorSpan);
                 riskFactorField.appendChild(POSDIV);
             }
             break;
         case 2:
             next.textContent = "Submit";
+            break;
+        case 3:
+            submit();
+            return;
     }
     
     // show next question field
@@ -145,7 +289,34 @@ function nextHandler() {
     count++;
 }
 
-next.addEventListener('click', nextHandler);
+function submit() {
+    let submitData = "name=" + name + "&" + "age=" + age + "&" + "gender=" + gender + "&"
+            + "pregnant=" + pregnant + "&" + "OGTT=" + OGTT + "&" + "FPG=" + FPG + "&"
+            + "CPG=" + CPG + "&" + "obesity=" + obesity + "&" + "bloodPressure=" + bloodPressure + "&"
+            + "familyHistory=" + familyHistory + "&" + "TG=" + TG + "&" + "lowActivity=" + lowActivity + "&"
+            + "IGT=" + IGT + "&" + "FPGResult=" + FPGResult + "&" + "gestational=" + gestational + "&"
+            + "POS=" + POS + "&" + "headache=" + headache + "&" + "BV=" + BV + "&"
+            + "EU=" + EU + "&" + "polydipsia=" + polydipsia + "&" + "LC=" + LC + "&"
+            + "NV=" + NV + "&" + "polyphagia=" + polyphagia + "&" + "tiredness=" + tiredness + "&"
+            + "LW=" + LW + "&" + "FST=" + FST + "&" + "FI=" + FI + "&"
+            + "sensation=" + sensation + "&" + "coldWweat=" + coldWweat;
+    
+    let xhttp;
+    if (window.XMLHttpRequest) {
+        xhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            console.log(this.responseText);
+        }
+    };
+    xhttp.open("POST", "/xxx", true);
+    xhttp.send(submitData);
+}
 
 // get value of each field
 function getValue(obj) {
@@ -166,19 +337,101 @@ function getValue(obj) {
             pregnant = obj.value;
             console.log(pregnant);
             break;
-        case "ogtt":
-            ogtt = obj.value;
-            console.log(ogtt);
+        case "OGTT":
+            OGTT = obj.value;
+            console.log(OGTT);
             break;
-        case "fpg":
-            fpg = obj.value;
-            console.log(fpg);
+        case "FPG":
+            FPG = obj.value;
+            console.log(FPG);
             break;
-        case "cpg":
-            cpg = obj.value;
-            console.log(cpg);
+        case "CPG":
+            CPG = obj.value;
+            console.log(CPG);
+            break;
+        case "obesity":
+            obesity = obj.value;
+            console.log(obesity);
+            break;
+        case "blood-pressure":
+            bloodPressure = obj.value;
+            console.log(bloodPressure);
+            break;
+        case "family-history":
+            familyHistory = obj.value;
+            console.log(familyHistory);
+            break;
+        case "TG":
+            TG = obj.value;
+            console.log(TG);
+            break;
+        case "low-activity":
+            lowActivity = obj.value;
+            console.log(lowActivity);
+            break;
+        case "IGT":
+            IGT = obj.value;
+            console.log(IGT);
+            break;
+        case "FPG-result":
+            FPGResult = obj.value;
+            console.log(FPGResult);
+            break;
+        case "gestational":
+            gestational = obj.value;
+            console.log(gestational);
+            break;
+        case "headache":
+            headache = obj.value;
+            console.log(headache);
+            break;
+        case "BV":
+            BV = obj.value;
+            console.log(BV);
+            break;
+        case "EU":
+            EU = obj.value;
+            console.log(EU);
+            break;
+        case "polydipsia":
+            polydipsia = obj.value;
+            console.log(polydipsia);
+            break;
+        case "LC":
+            LC = obj.value;
+            console.log(LC);
+            break;
+        case "NV":
+            NV = obj.value;
+            console.log(NV);
+            break;
+        case "polyphagia":
+            polyphagia = obj.value;
+            console.log(polyphagia);
+            break;
+        case "tiredness":
+            tiredness = obj.value;
+            console.log(tiredness);
+            break;
+        case "LW":
+            LW = obj.value;
+            console.log(LW);
+            break;
+        case "FST":
+            FST = obj.value;
+            console.log(FST);
+            break;
+        case "FI":
+            FI = obj.value;
+            console.log(FI);
+            break;
+        case "sensation":
+            sensation = obj.value;
+            console.log(sensation);
+            break;
+        case "cold-sweat":
+            coldWweat = obj.value;
+            console.log(coldWweat);
             break;
     }
 }
-
-
