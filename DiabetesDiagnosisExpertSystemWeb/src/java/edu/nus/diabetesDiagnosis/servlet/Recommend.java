@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import CLIPSJNI.*;
+
 /**
  *
  * @author Administrator
@@ -37,7 +39,6 @@ public class Recommend extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String name = request.getParameter("name");
         String age = request.getParameter("age");
         String gender = request.getParameter("gender");
         String pregnant = request.getParameter("pregnant");
@@ -67,10 +68,35 @@ public class Recommend extends HttpServlet {
         String sensation = request.getParameter("sensation");
         String coldWweat = request.getParameter("coldWweat");
         
+//      Environment clips = new Environment();
+//      clips.load("G:\\DiabetesDiagnosisExpertSystemWeb\\blocks.CLP");
+//
+//      clips.reset();
+//      clips.assertString("(goal (move " + move + ") (on-top-of " + on_top_of + "))");
+//
+//      clips.run();
+//
+//      String evalStr = "(find-all-facts ((?f action)) TRUE)";
+//      try {
+//        MultifieldValue pv = (MultifieldValue) clips.eval(evalStr);
+//        int tNum = pv.size();
+//        if (tNum == 0) return;
+//        FactAddressValue fv;
+//        for (int i=0; i<tNum; i++)
+//          {
+//           fv = (FactAddressValue) pv.get(i);
+//           move = fv.getFactSlot("move").toString();
+//           on_top_of = fv.getFactSlot("on-top-of").toString();
+//           out.println("<p>" + move + " moved on top of " + on_top_of + ".");
+//          }
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//        }
+        
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.print("{\"status\": \"success\"}");
+            out.print("{\"status\": \"success\", \"message\": \"still need to check!\"}");
         }
     }
 }

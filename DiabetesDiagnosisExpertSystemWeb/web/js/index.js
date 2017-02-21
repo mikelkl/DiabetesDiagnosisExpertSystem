@@ -9,7 +9,6 @@
 // field with last value.
 // Thus, attributes should
 // be initialized at decleration stage.
-let name = document.getElementsByName("name")[0].value;
 let age = document.getElementsByName("age")[0].value;
 let gender;
 if (document.getElementsByName("gender")[0].checked) {
@@ -18,6 +17,19 @@ if (document.getElementsByName("gender")[0].checked) {
 if (document.getElementsByName("gender")[1].checked) {
     gender = document.getElementsByName("gender")[1].value;
 }
+
+// check if gender is female by using getter and setter to listen the value change of gender
+//Object.defineProperty(gender, 'female', {
+//    get: function () {
+//        console.log('get：' + gender);
+//        return gender;
+//    },
+//    set: function (value) {
+//        gender = value;
+//        console.log('set:' + gender);
+//    }
+//});
+
 let pregnant;
 if (document.getElementsByName("pregnant")[0].checked) {
     pregnant = document.getElementsByName("pregnant")[0].value;
@@ -290,7 +302,7 @@ function nextHandler() {
 }
 
 function submit() {
-    let submitData = "name=" + name + "&" + "age=" + age + "&" + "gender=" + gender + "&"
+    let submitData = "age=" + age + "&" + "gender=" + gender + "&"
             + "pregnant=" + pregnant + "&" + "OGTT=" + OGTT + "&" + "FPG=" + FPG + "&"
             + "CPG=" + CPG + "&" + "obesity=" + obesity + "&" + "bloodPressure=" + bloodPressure + "&"
             + "familyHistory=" + familyHistory + "&" + "TG=" + TG + "&" + "lowActivity=" + lowActivity + "&"
@@ -312,9 +324,10 @@ function submit() {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let result = JSON.parse(this.responseText);
-            fieldsets[3].style.display = "none";S
+            fieldsets[3].style.display = "none";
+            next.style.display = "none";
             let resultDiv = document.querySelector("#result");
-            resultDiv.textContent = result.status;
+            resultDiv.textContent = result.status + " " + result.message;
         }
     };
     xhttp.open("POST", "Recommend", true);
@@ -325,10 +338,6 @@ function submit() {
 // get value of each field
 function getValue(obj) {
     switch(obj.name) {
-        case "name":
-            name = obj.value;
-            console.log(name);
-            break;
         case "age":
             age = obj.value;
             console.log(age);
