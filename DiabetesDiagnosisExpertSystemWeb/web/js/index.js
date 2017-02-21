@@ -311,10 +311,14 @@ function submit() {
     
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
-            console.log(this.responseText);
+            let result = JSON.parse(this.responseText);
+            fieldsets[3].style.display = "none";S
+            let resultDiv = document.querySelector("#result");
+            resultDiv.textContent = result.status;
         }
     };
-    xhttp.open("POST", "/xxx", true);
+    xhttp.open("POST", "Recommend", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(submitData);
 }
 
@@ -380,6 +384,10 @@ function getValue(obj) {
         case "gestational":
             gestational = obj.value;
             console.log(gestational);
+            break;
+        case "POS":
+            POS = obj.value;
+            console.log(POS);
             break;
         case "headache":
             headache = obj.value;
