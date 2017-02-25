@@ -1,0 +1,31 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 25, 2017, 11:58:20 AM
+    Author     : Administrator
+*/
+body {
+    font-family: 'Roboto', serif;
+}
+
+.lgt-error {
+    color: #d32F2f;
+    margin-left: 10px;
+}
+
+.lgt-text-input {
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    /*display: block;*/
+    font-size: 16px;
+    font-family: "Helvetica","Arial",sans-serif;
+    margin: 0;
+    padding: 4px 0;
+    /*width: 100%;*/
+    background: 0 0;
+    text-align: left;
+    color: inherit;
+}

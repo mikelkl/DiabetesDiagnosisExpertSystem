@@ -9,6 +9,8 @@ and open the template in the editor.
         <title>Diabetes Diagnosis Expert System</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="./css/light.css">
     </head>
     <body>
         <section class="lgt-grid">
@@ -25,7 +27,7 @@ and open the template in the editor.
                     <span class="lgt-error"></span>
                 </div>
                 <div class="lgt-input-group">
-                    How old are you? <input name="age" type="text" onblur="getValue(this)"/>
+                    How old are you? <input name="age" type="number" class="lgt-text-input" onblur="getValue(this)"/>
                     <span class="lgt-error"></span>
                 </div>
             </fieldset>
@@ -33,7 +35,7 @@ and open the template in the editor.
             <fieldset id="test-question" style="display: none;">
                 <legend>Test Question</legend>
                 <div class="lgt-input-group">
-                    How much is your blood glucose level (mmol/L) shown in 2-hours post Oral Glucose Tolerance test (OGTT) ? <input name="OGTT" type="text" onblur="getValue(this)"/>
+                    How much is your blood glucose level (mmol/L) shown in 2-hours post Oral Glucose Tolerance test (OGTT) ? <input name="OGTT" type="number" class="lgt-text-input" onblur="getValue(this)"/>
                     <span class="lgt-error"></span>
                 </div>
             </fieldset>
