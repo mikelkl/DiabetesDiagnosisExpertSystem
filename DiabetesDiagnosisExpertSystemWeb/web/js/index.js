@@ -10,6 +10,7 @@
 // Thus, attributes should
 // be initialized at decleration stage.
 let age = document.getElementsByName("age")[0].value;
+let gender;
 if (document.getElementsByName("gender")[0].checked) {
     gender = document.getElementsByName("gender")[0].value;
 }
@@ -162,7 +163,7 @@ if (document.getElementsByName("cold-sweat")[1].checked) {
 
 let next = document.querySelector("#next"); // next button
 next.addEventListener('click', nextHandler);
-
+let navItems = document.getElementsByClassName("lgt-nav-item");
 let container = document.querySelector("section"); // top container
 let fieldsets = document.querySelectorAll("fieldset"); // select all question fields
 let count = 0;
@@ -332,10 +333,16 @@ function nextHandler() {
                 return;
             }
             submit();
+            navItems[count].classList.remove("lgt-primary-text");
+            navItems[count + 1].classList.add("lgt-primary-text");
             return;
     }
     
     // show next question field
+    navItems[count].classList.remove("lgt-primary-text");
+    navItems[count + 1].classList.add("lgt-primary-text");
+//    navItems[count].style.color = "rgba(0,0,0,.38)";
+//    navItems[count + 1].style.color = "rgba(0,0,0,.87)";
     fieldsets[count].style.display = "none";
     fieldsets[count + 1].style.display = "block";
     count++;
