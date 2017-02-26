@@ -9,7 +9,7 @@
 // field with last value.
 // Thus, attributes should
 // be initialized at decleration stage.
-let age = document.getElementsByName("age")[0].value;
+let age;
 let gender;
 if (document.getElementsByName("gender")[0].checked) {
     gender = document.getElementsByName("gender")[0].value;
@@ -176,18 +176,36 @@ function check() {
         checked = checked && arguments[i];
     }
     if (!checked) {
-        alert("Please fill all fields before you go the next part!");
+        alert("Please fill all fields correctly before you go the next part!");
     }
     return checked;
 }
 
 // check number
-function checkNumber (obj, value) {
-    if (value === "") {
-        obj.nextElementSibling.textContent = "Please input valid value!";
-    } else {
-        obj.nextElementSibling.textContent = "";
+// type: 1. Integer, 2. Float
+function checkNumber (obj, type) {
+    let r, msg;
+    
+    // test different regular expression for integer and float
+    switch (type) {
+        case 1:
+            r = /^[0-9]*[1-9][0-9]*$/;
+            msg = "Please input valid integer!";
+            break;
+        case 2:
+            r = /^\d+(\.\d+)?$/;
+            msg = "Please input valid float!";
+            break;
     }
+    
+    if (r.test(obj.value)) {
+        obj.nextElementSibling.textContent = "";
+        obj.style.border = "2px solid #4caf50";
+    } else {
+        obj.nextElementSibling.textContent = msg;
+        obj.style.border = "2px solid #d32F2f";
+    }
+    return r.test(obj.value);
 }
 
 // loading next "page"
@@ -207,11 +225,11 @@ function nextHandler() {
             if (pregnant === 'no') {
                 // append FPG div
                 let FPGDIV = document.createElement("div");
-                FPGDIV.class = "lgt-input-group";
+                FPGDIV.classList.add("lgt-input-group");
                 FPGDIV.textContent = "How much is your blood glucose level (mmol/L) shown in Fasting Plasma Glucose test (FPG) ? ";
                 let FPGInput = document.createElement("input");
                 FPGInput.name = "FPG";
-                FPGInput.type = "number";
+                FPGInput.type = "text";
                 FPGInput.classList.add("lgt-text-input");
                 // bind listen event
                 FPGInput.onblur = function() {
@@ -225,11 +243,11 @@ function nextHandler() {
 
                 // append CPG div
                 let CPGDIV = document.createElement("div");
-                CPGDIV.class = "lgt-input-group";
+                CPGDIV.classList.add("lgt-input-group");
                 CPGDIV.textContent = "How much is your blood glucose level (mmol/L) shown in Casual Plasma Glucose test (CPG) ? ";
                 let CPGInput = document.createElement("input");
                 CPGInput.name = "CPG";
-                CPGInput.type = "number";
+                CPGInput.type = "text";
                 CPGInput.classList.add("lgt-text-input");
                 // bind listen event
                 CPGInput.onblur = function() {
@@ -243,14 +261,14 @@ function nextHandler() {
             }
             break;
         case 1:
-            if (!check(OGTT)) {
-                return;
-            }
-            if (pregnant === "no") {
-                if (!check(OGTT, FPG, CPG)) {
-                    return;
-                }
-            }
+//            if (!check(OGTT)) {
+//                return;
+//            }
+//            if (pregnant === "no") {
+//                if (!check(OGTT, FPG, CPG)) {
+//                    return;
+//                }
+//            }
             
             let riskFactorField = fieldsets[2];
 
@@ -258,7 +276,7 @@ function nextHandler() {
             if (gender === 'female') {
                 // append History of gestational diabetes or Having Baby with over 4 Kg weight (female only) div
                 let gestationalDIV = document.createElement("div");
-                gestationalDIV.class = "lgt-input-group";
+                gestationalDIV.classList.add("lgt-input-group");
                 gestationalDIV.textContent = "Do you have history of gestational diabetes or having baby with over 4kg? ";
                 let gestationalInputRadio1 = document.createElement("input");
                 gestationalInputRadio1.name = "gestational";
@@ -288,7 +306,7 @@ function nextHandler() {
                 
                 // append Polycystic Ovarian Syndrome (female only) div
                 let POSDIV = document.createElement("div");
-                POSDIV.class = "lgt-input-group";
+                POSDIV.classList.add("lgt-input-group");
                 POSDIV.textContent = "Do you have Polycystic Ovarian Syndrome? ";
                 let POSInputRadio1 = document.createElement("input");
                 POSInputRadio1.name = "POS";
@@ -318,20 +336,20 @@ function nextHandler() {
             }
             break;
         case 2:
-            if (!check(obesity, bloodPressure, familyHistory, TG, lowActivity, IGT)) {
-                return;
-            }
-            if (gender === "female") {
-                if (!check(gestational, POS)) {
-                    return;
-                }
-            }
+//            if (!check(obesity, bloodPressure, familyHistory, TG, lowActivity, IGT)) {
+//                return;
+//            }
+//            if (gender === "female") {
+//                if (!check(gestational, POS)) {
+//                    return;
+//                }
+//            }
             next.textContent = "Submit";
             break;
         case 3:
-            if (!check(headache, BV, EU, TG, polydipsia, LC, NV, polyphagia, tiredness, LW, FST, FI, sensation, coldSweat)) {
-                return;
-            }
+//            if (!check(headache, BV, EU, TG, polydipsia, LC, NV, polyphagia, tiredness, LW, FST, FI, sensation, coldSweat)) {
+//                return;
+//            }
             submit();
             navItems[count].classList.remove("lgt-primary-text");
             navItems[count + 1].classList.add("lgt-primary-text");
@@ -389,9 +407,12 @@ function submit() {
 function getValue(obj) {
     switch(obj.name) {
         case "age":
-            age = obj.value;
-            checkNumber(obj, age);
-            console.log(age);
+            if (checkNumber(obj, 1)) {
+                age = obj.value;
+                console.log(age);
+            } else {
+                age = 0;
+            }
             break;
         case "gender":
             gender = obj.value;
@@ -402,24 +423,36 @@ function getValue(obj) {
             console.log(pregnant);
             break;
         case "OGTT":
-            OGTT = obj.value;
-            checkNumber(obj, OGTT);
-            console.log(OGTT);
+            if (checkNumber(obj, 2)) {
+                OGTT = obj.value;
+                console.log(OGTT);
+            } else {
+                OGTT = 0;
+            }
             break;
         case "FPG":
-            FPG = obj.value;
-            checkNumber(obj, FPG);
-            console.log(FPG);
+            if (checkNumber(obj, 2)) {
+                FPG = obj.value;
+                console.log(FPG);
+            } else {
+                FPG = 0;
+            }
             break;
         case "CPG":
-            CPG = obj.value;
-            checkNumber(obj, CPG);
-            console.log(CPG);
+            if (checkNumber(obj, 2)) {
+                CPG = obj.value;
+                console.log(CPG);
+            } else {
+                CPG = 0;
+            }
             break;
         case "obesity":
-            obesity = obj.value;
-            checkNumber(obj, obesity);
-            console.log(obesity);
+            if (checkNumber(obj, 2)) {
+                obesity = obj.value;
+                console.log(obesity);
+            } else {
+                obesity = 0;
+            }
             break;
         case "blood-pressure":
             bloodPressure = obj.value;
