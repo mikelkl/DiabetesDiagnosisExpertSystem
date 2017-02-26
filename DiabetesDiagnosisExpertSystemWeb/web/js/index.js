@@ -389,13 +389,42 @@ function submit() {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let result = JSON.parse(this.responseText);
+            if (pregnant !== "yes") {
+                result["gestational-diabetes"] = 0;
+            }
+            
             fieldsets[3].style.display = "none";
             next.style.display = "none";
-            let resultDiv = document.querySelector("#result");
-            let key;
-            for(key in result) {
-                resultDiv.innerHTML += key + ": " + result[key] + "<br/>";
+            let resultDiv = document.querySelector(".result");
+//            let key;
+//            for(key in result) {
+//                resultDiv.innerHTML += key + ": " + result[key]*100 + "%<br/>";
+//            }
+            if (result["diabetes-type-I"] < 0) {
+                result["diabetes-type-I"] = 0;
             }
+            if (result["diabetes-type-II"] < 0) {
+                result["diabetes-type-II"] = 0;
+            }
+            if (result["gestational-diabetes"] < 0) {
+                result["gestational-diabetes"] = 0;
+            }
+            resultDiv.innerHTML += "diabetes-type-I: " + result["diabetes-type-I"]*100 + "%<br/>";
+            resultDiv.innerHTML += "diabetes-type-II: " + result["diabetes-type-II"]*100 + "%<br/>";
+            resultDiv.innerHTML += "gestational-diabetes: " + result["gestational-diabetes"]*100 + "%<br/>";
+            
+            let recommendationDiv = document.querySelector(".recommendation");
+            let recommendation = "";
+            if (result["healthy"] == 1) {
+                recommendation = "Congratulation! You are healthy!"
+            }
+            if (result["more-consideration"] == 1) {
+                recommendation = "Um... You should seek further medication consult!"
+            }
+            if (result["at-risk"] == 1) {
+                recommendation = "Warning! It seems You are at risk of diabetes with posibility is the % of diabete I or II"
+            }
+            recommendationDiv.innerHTML = recommendation;
         }
     };
     xhttp.open("POST", "Recommend", true);

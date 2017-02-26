@@ -105,3 +105,9 @@ fieldset {
     transition: all 0.2s ease-in;
 }
 
+.recommendation {
+    font-size: 18px;
+    font-weight: 500;
+    color:  #3f51b5;
+}
+
