@@ -164,8 +164,9 @@ if (document.getElementsByName("cold-sweat")[1].checked) {
 let next = document.querySelector("#next"); // next button
 next.addEventListener('click', nextHandler);
 let navItems = document.getElementsByClassName("lgt-nav-item");
-let container = document.querySelector("section"); // top container
+//let container = document.querySelector("section"); // top container
 let fieldsets = document.querySelectorAll("fieldset"); // select all question fields
+let pages = document.querySelectorAll(".page"); // select all question fields
 let count = 0;
 
 // error check
@@ -359,10 +360,10 @@ function nextHandler() {
     // show next question field
     navItems[count].classList.remove("lgt-primary-text");
     navItems[count + 1].classList.add("lgt-primary-text");
-//    navItems[count].style.color = "rgba(0,0,0,.38)";
-//    navItems[count + 1].style.color = "rgba(0,0,0,.87)";
-    fieldsets[count].style.display = "none";
-    fieldsets[count + 1].style.display = "block";
+//    fieldsets[count].style.display = "none";
+//    fieldsets[count + 1].style.display = "block";
+    pages[count].className = ("lgt-card page stage-left");
+    pages[count + 1].className = ("lgt-card page stage-center");
     count++;
 }
 
@@ -393,7 +394,10 @@ function submit() {
                 result["gestational-diabetes"] = 0;
             }
             
-            fieldsets[3].style.display = "none";
+//            fieldsets[3].style.display = "none";
+            pages[3].className = ("lgt-card page stage-left");
+            pages[4].className = ("lgt-card page stage-center");
+            
             next.style.display = "none";
             let resultDiv = document.querySelector(".result");
 //            let key;
@@ -419,7 +423,7 @@ function submit() {
                 recommendation = "Congratulation! You are healthy!"
             }
             if (result["more-consideration"] == 1) {
-                recommendation = "Um... You should seek further medication consult!"
+                recommendation = "You should seek further medication consult!"
             }
             if (result["at-risk"] == 1) {
                 recommendation = "Warning! It seems You are at risk of diabetes with posibility is the % of diabete I or II"

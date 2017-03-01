@@ -11,6 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <link rel="stylesheet" href="./css/light.css">
+        <link rel="stylesheet" href="./css/style.css">
     </head>
     <body>
         <header>
@@ -30,142 +31,151 @@ and open the template in the editor.
             </div>
         </header>
         
-        <section class="lgt-grid">
-            <div class="lgt-card">
+        <!--<section class="lgt-grid">-->
+            <div class="container">
+                <div class="lgt-card page stage-center">
+                    <fieldset class="" id="user-question">
+                        <div class="lgt-input-group">
+                            What is your gender? <input type="radio" name="gender" value="male" onblur="getValue(this)" onclick="document.querySelector('#pregnant-group').style.display = 'none';"> Male
+                            <input type="radio" name="gender" value="female" onblur="getValue(this)" onclick="document.querySelector('#pregnant-group').style.display = 'block';"> Female
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group" id="pregnant-group" style="display:none;">
+                            Are you pregnant? <input type="radio" name="pregnant" value="yes" onblur="getValue(this)" autocomplete="off"> Yes
+                            <input type="radio" name="pregnant" onblur="getValue(this)" value="no" autocomplete="off"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            How old are you? <input name="age" type="text" class="lgt-text-input" onblur="getValue(this)" autocomplete="off"/>
+                            <span class="lgt-error"></span>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="lgt-card page stage-right">
+                    <fieldset class="" id="test-question">
+                        <div class="lgt-input-group">
+                            How much is your blood glucose level (mmol/L) shown in 2-hours post Oral Glucose Tolerance test (OGTT) ? <input name="OGTT" type="text" class="lgt-text-input" onblur="getValue(this)"/>
+                            <span class="lgt-error"></span>
+                        </div>
+                    </fieldset>
+                 </div>
+
+                <div class="lgt-card page stage-right">
+                    <fieldset class="" id="risk-factor-question">
+                        <div class="lgt-input-group">
+                            How much is your Body Mass Index (BMI) ? <input name="obesity" type="text" onblur="getValue(this)"/>
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have high blood pressure (>= 140/90 Mm Hg)? <input type="radio" name="blood-pressure" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="blood-pressure" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have any family member has history of diabetes? <input type="radio" name="family-history" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="family-history" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            What's your triglyceride (body fat): <input type="radio" name="TG" value="n" onblur="getValue(this)"> normal level (< 150mg/dL)
+                            <input type="radio" name="TG" value="b" onblur="getValue(this)"> borderline high (150-199mg/dL)
+                            <input type="radio" name="TG" value="h" onblur="getValue(this)"> high to very high (>200mg/dL)
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you exercise (do physical activity) at least 3 times per week? <input type="radio" name="low-activity" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="low-activity" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have impaired Glucose Tolerance in previous tests? <input type="radio" name="IGT" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="IGT" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                    </fieldset>
+                </div>
                 
-                <fieldset id="user-question">
-                    <div class="lgt-input-group">
-                        What is your gender? <input type="radio" name="gender" value="male" onblur="getValue(this)" onclick="document.querySelector('#pregnant-group').style.display = 'none';"> Male
-                        <input type="radio" name="gender" value="female" onblur="getValue(this)" onclick="document.querySelector('#pregnant-group').style.display = 'block';"> Female
-                        <span class="lgt-error"></span>
+                <div class="lgt-card page stage-right">
+                    <fieldset class="" id="symp-question">
+                        <div class="lgt-input-group">
+                            Do you have headache? <input type="radio" name="headache" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="headache" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you experience any blur of vision? <input type="radio" name="BV" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="BV" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have excessive urination (the need to urinate more than you normally would, might occur along with bladder discomfort)? <input type="radio" name="EU" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="EU" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have polydipsia (excessive thirst)? <input type="radio" name="polydipsia" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="polydipsia" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you experience losing consciousness? <input type="radio" name="LC" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="LC" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have symptom of nausea and vomitting? <input type="radio" name="NV" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="NV" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you experience polyphagia or hyperphagia (excessive hunger or abnormally consumption of large quantities of food)? <input type="radio" name="polyphagia" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="polyphagia" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you experience tiredness?  <input type="radio" name="tiredness" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="tiredness" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Are you losing weight without reason? <input type="radio" name="LW" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="LW" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have any fraction and skin tag? <input type="radio" name="FST" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="FST" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have frequent infections? <input type="radio" name="FI" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="FI" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have experience loss of sensation in hands and feet? <input type="radio" name="sensation" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="sensation" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                        <div class="lgt-input-group">
+                            Do you have experience cold sweat (sudden sweating not due to exertion or heat)? <input type="radio" name="cold-sweat" value="yes" onblur="getValue(this)"> Yes
+                            <input type="radio" name="cold-sweat" value="no" onblur="getValue(this)"> No
+                            <span class="lgt-error"></span>
+                        </div>
+                    </fieldset>
+                </div>
+                
+                <div class="lgt-card page stage-right">
+                    <div class="" id="result">
+                        <div class="result"></div>
+                        <div class="recommendation"></div>
                     </div>
-                    <div class="lgt-input-group" id="pregnant-group" style="display:none;">
-                        Are you pregnant? <input type="radio" name="pregnant" value="yes" onblur="getValue(this)" autocomplete="off"> Yes
-                        <input type="radio" name="pregnant" onblur="getValue(this)" value="no" autocomplete="off"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        How old are you? <input name="age" type="text" class="lgt-text-input" onblur="getValue(this)" autocomplete="off"/>
-                        <span class="lgt-error"></span>
-                    </div>
-                </fieldset>
-
-                <fieldset id="test-question" style="display: none;">
-                    <div class="lgt-input-group">
-                        How much is your blood glucose level (mmol/L) shown in 2-hours post Oral Glucose Tolerance test (OGTT) ? <input name="OGTT" type="text" class="lgt-text-input" onblur="getValue(this)"/>
-                        <span class="lgt-error"></span>
-                    </div>
-                </fieldset>
-
-                <fieldset id="risk-factor-question" style="display: none;">
-                    <div class="lgt-input-group">
-                        How much is your Body Mass Index (BMI) ? <input name="obesity" type="text" onblur="getValue(this)"/>
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have high blood pressure (>= 140/90 Mm Hg)? <input type="radio" name="blood-pressure" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="blood-pressure" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have any family member has history of diabetes? <input type="radio" name="family-history" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="family-history" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        What's your triglyceride (body fat): <input type="radio" name="TG" value="n" onblur="getValue(this)"> normal level (< 150mg/dL)
-                        <input type="radio" name="TG" value="b" onblur="getValue(this)"> borderline high (150-199mg/dL)
-                        <input type="radio" name="TG" value="h" onblur="getValue(this)"> high to very high (>200mg/dL)
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you exercise (do physical activity) at least 3 times per week? <input type="radio" name="low-activity" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="low-activity" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have impaired Glucose Tolerance in previous tests? <input type="radio" name="IGT" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="IGT" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                </fieldset>
-
-                <fieldset id="symp-question" style="display: none;">
-                    <div class="lgt-input-group">
-                        Do you have headache? <input type="radio" name="headache" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="headache" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you experience any blur of vision? <input type="radio" name="BV" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="BV" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have excessive urination (the need to urinate more than you normally would, might occur along with bladder discomfort)? <input type="radio" name="EU" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="EU" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have polydipsia (excessive thirst)? <input type="radio" name="polydipsia" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="polydipsia" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you experience losing consciousness? <input type="radio" name="LC" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="LC" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have symptom of nausea and vomitting? <input type="radio" name="NV" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="NV" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you experience polyphagia or hyperphagia (excessive hunger or abnormally consumption of large quantities of food)? <input type="radio" name="polyphagia" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="polyphagia" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you experience tiredness?  <input type="radio" name="tiredness" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="tiredness" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Are you losing weight without reason? <input type="radio" name="LW" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="LW" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have any fraction and skin tag? <input type="radio" name="FST" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="FST" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have frequent infections? <input type="radio" name="FI" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="FI" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have experience loss of sensation in hands and feet? <input type="radio" name="sensation" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="sensation" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                    <div class="lgt-input-group">
-                        Do you have experience cold sweat (sudden sweating not due to exertion or heat)? <input type="radio" name="cold-sweat" value="yes" onblur="getValue(this)"> Yes
-                        <input type="radio" name="cold-sweat" value="no" onblur="getValue(this)"> No
-                        <span class="lgt-error"></span>
-                    </div>
-                </fieldset>
-
-                <div id="result">
-                    <div class="result"></div>
-                    <div class="recommendation"></div>
                 </div>
             </div>
             
 <!--            <button id="next">Next</button>-->
-        </section>
+        <!--</section>-->
         
         <script src="./js/index.js"></script>
         <script>
