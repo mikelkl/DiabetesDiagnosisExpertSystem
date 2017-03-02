@@ -345,7 +345,7 @@ function nextHandler() {
 //                    return;
 //                }
 //            }
-            next.textContent = "Submit";
+            next.textContent = "View >";
             break;
         case 3:
 //            if (!check(headache, BV, EU, TG, polydipsia, LC, NV, polyphagia, tiredness, LW, FST, FI, sensation, coldSweat)) {
@@ -353,7 +353,7 @@ function nextHandler() {
 //            }
             submit();
             navItems[count].classList.remove("lgt-primary-text");
-            navItems[count + 1].classList.add("lgt-primary-text");
+//            navItems[count + 1].classList.add("lgt-primary-text");
             return;
     }
     
@@ -411,13 +411,13 @@ function submit() {
                 result["gestational-diabetes"] = 0;
             }
             if (result["diabetes-type-I"] > 0) {
-                resultDiv.innerHTML += "You have " + parseInt(result["diabetes-type-I"]*100) + "% chance of having diabetes-type-I<br/>";
+                resultDiv.innerHTML += "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["diabetes-type-I"]*100) + "%</b> chance of having diabetes-type-I<br/>";
             }
             if (result["diabetes-type-II"] > 0) {
-                resultDiv.innerHTML += "You have " + parseInt(result["diabetes-type-II"]*100) + "% chance of having diabetes-type-II<br/>";
+                resultDiv.innerHTML += "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["diabetes-type-II"]*100) + "%</b> chance of having diabetes-type-II<br/>";
             }
             if (result["gestational-diabetes"] > 0) {
-                resultDiv.innerHTML += "You have " + parseInt(result["gestational-diabetes"]*100) + "% chance of having gestational-diabetes<br/>";
+                resultDiv.innerHTML += "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["gestational-diabetes"]*100) + "%</b> chance of having gestational-diabetes<br/>";
             }
 //            resultDiv.innerHTML += "diabetes-type-I: " + result["diabetes-type-I"]*100 + "%<br/>";
 //            resultDiv.innerHTML += "diabetes-type-II: " + result["diabetes-type-II"]*100 + "%<br/>";
@@ -443,7 +443,7 @@ function submit() {
             if (allZero === 0) {
                 recommendation = "Not enough information."
             }
-            recommendationDiv.innerHTML = recommendation;
+            recommendationDiv.innerHTML = "<em class='bullet bullet-blue'></em>" + recommendation;
         }
     };
     xhttp.open("POST", "Recommend", true);

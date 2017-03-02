@@ -44,3 +44,26 @@ fieldset {
     font-weight: 500;
     color:  #3f51b5;
 }
+.result-title {
+    text-align: center;
+    font-size: 24px;
+    font-family: "FrutigerLight";
+    margin-bottom: 47px;
+    margin-top: 12px;
+    color: #100f0f;
+}
+.bullet {
+    width: 8px;
+    height: 8px;
+    margin-right: 10px;
+    float: left;
+    margin-top: 5px;
+}
+.bullet-blue {
+    background: #8fb0c4;
+}
+.bullet-pink {
+    background: #F9BDBB;
+}
+
+
