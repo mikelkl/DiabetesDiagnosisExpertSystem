@@ -411,13 +411,13 @@ function submit() {
                 result["gestational-diabetes"] = 0;
             }
             if (result["diabetes-type-I"] > 0) {
-                resultDiv.innerHTML += "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["diabetes-type-I"]*100) + "%</b> chance of having diabetes-type-I<br/>";
+                resultDiv.innerHTML = "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["diabetes-type-I"]*100) + "%</b> chance of having diabetes-type-I<br/>";
             }
             if (result["diabetes-type-II"] > 0) {
-                resultDiv.innerHTML += "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["diabetes-type-II"]*100) + "%</b> chance of having diabetes-type-II<br/>";
+                resultDiv.innerHTML = "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["diabetes-type-II"]*100) + "%</b> chance of having diabetes-type-II<br/>";
             }
             if (result["gestational-diabetes"] > 0) {
-                resultDiv.innerHTML += "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["gestational-diabetes"]*100) + "%</b> chance of having gestational-diabetes<br/>";
+                resultDiv.innerHTML = "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["gestational-diabetes"]*100) + "%</b> chance of having gestational-diabetes<br/>";
             }
 //            resultDiv.innerHTML += "diabetes-type-I: " + result["diabetes-type-I"]*100 + "%<br/>";
 //            resultDiv.innerHTML += "diabetes-type-II: " + result["diabetes-type-II"]*100 + "%<br/>";
