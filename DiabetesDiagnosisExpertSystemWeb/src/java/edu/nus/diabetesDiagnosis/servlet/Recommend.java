@@ -84,7 +84,7 @@ public class Recommend extends HttpServlet {
         response.setContentType("application/json");
         
         Environment clips = new Environment();
-        clips.load("E:\\University\\NUS\\Semester_1\\INTELLIGENT_SYSTEMS_AND_TECHNIQUES_FOR_BUSINESS_ANALYTICS\\CA\\DiabetesDiagnosisExpertSystem\\diagnosis1.CLP");
+        clips.load("E:\\University\\NUS\\Semester_1\\INTELLIGENT_SYSTEMS_AND_TECHNIQUES_FOR_BUSINESS_ANALYTICS\\CA\\DiabetesDiagnosisExpertSystem\\diagnosis.CLP");
 
         clips.reset();
 //        clips.assertString("(info-gender " + gender + ")");

@@ -262,9 +262,10 @@ function nextHandler() {
             }
             break;
         case 1:
-//            if (!check(OGTT)) {
-//                return;
-//            }
+            if (OGTT === "error" || FPG === "error" || CPG === "error") {
+                check(false);
+                return;
+            }
 //            if (pregnant === "no") {
 //                if (!check(OGTT, FPG, CPG)) {
 //                    return;
@@ -337,6 +338,10 @@ function nextHandler() {
             }
             break;
         case 2:
+            if (obesity === "error") {
+                check(false);
+                return;
+            }
 //            if (!check(obesity, bloodPressure, familyHistory, TG, lowActivity, IGT)) {
 //                return;
 //            }
@@ -459,7 +464,7 @@ function getValue(obj) {
                 age = obj.value;
                 console.log(age);
             } else {
-                age = 0;
+                age = "error";
             }
             break;
         case "gender":
@@ -471,35 +476,47 @@ function getValue(obj) {
             console.log(pregnant);
             break;
         case "OGTT":
+            if (obj.value === "") {
+                break;
+            }
             if (checkNumber(obj, 2)) {
                 OGTT = obj.value;
                 console.log(OGTT);
             } else {
-                OGTT = 0;
+                OGTT = "error";
             }
             break;
         case "FPG":
+            if (obj.value === "") {
+                break;
+            }
             if (checkNumber(obj, 2)) {
                 FPG = obj.value;
                 console.log(FPG);
             } else {
-                FPG = 0;
+                FPG = "error";
             }
             break;
         case "CPG":
+            if (obj.value === "") {
+                break;
+            }
             if (checkNumber(obj, 2)) {
                 CPG = obj.value;
                 console.log(CPG);
             } else {
-                CPG = 0;
+                CPG = "error";
             }
             break;
         case "obesity":
+            if (obj.value === "") {
+                break;
+            }
             if (checkNumber(obj, 2)) {
                 obesity = obj.value;
                 console.log(obesity);
             } else {
-                obesity = 0;
+                obesity = "error";
             }
             break;
         case "blood-pressure":

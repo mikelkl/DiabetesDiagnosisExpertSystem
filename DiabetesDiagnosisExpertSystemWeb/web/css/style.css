@@ -11,7 +11,7 @@ and open the template in the editor.
 .container {
     position: absolute;
     top: 115px;
-    width: 80%;
+    width: 85%;
     height: 100%;
     left: 0;
     right: 0;
@@ -21,13 +21,14 @@ and open the template in the editor.
 .page {
     position: absolute;
     /*height: 100%;*/
-    width: 100%;
+    /*width: 100%;*/
     transform: translate3d(0, 0, 0);
     transition-duration: .2s;
     transition-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
 }
 .stage-center {
     left: 0;
+    right: 0;
 }
 .stage-left {
     left: -105%;
