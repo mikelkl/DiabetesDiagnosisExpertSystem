@@ -463,8 +463,6 @@ function getValue(obj) {
             if (checkNumber(obj, 1)) {
                 age = obj.value;
                 console.log(age);
-            } else {
-                age = "error";
             }
             break;
         case "gender":
