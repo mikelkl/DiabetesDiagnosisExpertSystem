@@ -9,7 +9,8 @@
 // field with last value.
 // Thus, attributes should
 // be initialized at decleration stage.
-let age = document.getElementsByName("age")[0].value;
+let age;
+let gender;
 if (document.getElementsByName("gender")[0].checked) {
     gender = document.getElementsByName("gender")[0].value;
 }
@@ -162,9 +163,10 @@ if (document.getElementsByName("cold-sweat")[1].checked) {
 
 let next = document.querySelector("#next"); // next button
 next.addEventListener('click', nextHandler);
-
-let container = document.querySelector("section"); // top container
+let navItems = document.getElementsByClassName("lgt-nav-item");
+//let container = document.querySelector("section"); // top container
 let fieldsets = document.querySelectorAll("fieldset"); // select all question fields
+let pages = document.querySelectorAll(".page"); // select all question fields
 let count = 0;
 
 // error check
@@ -175,18 +177,36 @@ function check() {
         checked = checked && arguments[i];
     }
     if (!checked) {
-        alert("Please fill all fields before you go the next part!");
+        alert("Please fill all fields correctly before you go the next part!");
     }
     return checked;
 }
 
 // check number
-function checkNumber (obj, value) {
-    if (value === "") {
-        obj.nextElementSibling.textContent = "Please input valid value!";
-    } else {
-        obj.nextElementSibling.textContent = "";
+// type: 1. Integer, 2. Float
+function checkNumber (obj, type) {
+    let r, msg;
+    
+    // test different regular expression for integer and float
+    switch (type) {
+        case 1:
+            r = /^[0-9]*[1-9][0-9]*$/;
+            msg = "Please input valid integer!";
+            break;
+        case 2:
+            r = /^\d+(\.\d+)?$/;
+            msg = "Please input valid float!";
+            break;
     }
+    
+    if (r.test(obj.value)) {
+        obj.nextElementSibling.textContent = "";
+        obj.style.border = "2px solid #4caf50";
+    } else {
+        obj.nextElementSibling.textContent = msg;
+        obj.style.border = "2px solid #d32F2f";
+    }
+    return r.test(obj.value);
 }
 
 // loading next "page"
@@ -206,11 +226,11 @@ function nextHandler() {
             if (pregnant === 'no') {
                 // append FPG div
                 let FPGDIV = document.createElement("div");
-                FPGDIV.class = "lgt-input-group";
+                FPGDIV.classList.add("lgt-input-group");
                 FPGDIV.textContent = "How much is your blood glucose level (mmol/L) shown in Fasting Plasma Glucose test (FPG) ? ";
                 let FPGInput = document.createElement("input");
                 FPGInput.name = "FPG";
-                FPGInput.type = "number";
+                FPGInput.type = "text";
                 FPGInput.classList.add("lgt-text-input");
                 // bind listen event
                 FPGInput.onblur = function() {
@@ -224,11 +244,11 @@ function nextHandler() {
 
                 // append CPG div
                 let CPGDIV = document.createElement("div");
-                CPGDIV.class = "lgt-input-group";
+                CPGDIV.classList.add("lgt-input-group");
                 CPGDIV.textContent = "How much is your blood glucose level (mmol/L) shown in Casual Plasma Glucose test (CPG) ? ";
                 let CPGInput = document.createElement("input");
                 CPGInput.name = "CPG";
-                CPGInput.type = "number";
+                CPGInput.type = "text";
                 CPGInput.classList.add("lgt-text-input");
                 // bind listen event
                 CPGInput.onblur = function() {
@@ -242,14 +262,15 @@ function nextHandler() {
             }
             break;
         case 1:
-            if (!check(OGTT)) {
+            if (OGTT === "error" || FPG === "error" || CPG === "error") {
+                check(false);
                 return;
             }
-            if (pregnant === "no") {
-                if (!check(OGTT, FPG, CPG)) {
-                    return;
-                }
-            }
+//            if (pregnant === "no") {
+//                if (!check(OGTT, FPG, CPG)) {
+//                    return;
+//                }
+//            }
             
             let riskFactorField = fieldsets[2];
 
@@ -257,7 +278,7 @@ function nextHandler() {
             if (gender === 'female') {
                 // append History of gestational diabetes or Having Baby with over 4 Kg weight (female only) div
                 let gestationalDIV = document.createElement("div");
-                gestationalDIV.class = "lgt-input-group";
+                gestationalDIV.classList.add("lgt-input-group");
                 gestationalDIV.textContent = "Do you have history of gestational diabetes or having baby with over 4kg? ";
                 let gestationalInputRadio1 = document.createElement("input");
                 gestationalInputRadio1.name = "gestational";
@@ -287,7 +308,7 @@ function nextHandler() {
                 
                 // append Polycystic Ovarian Syndrome (female only) div
                 let POSDIV = document.createElement("div");
-                POSDIV.class = "lgt-input-group";
+                POSDIV.classList.add("lgt-input-group");
                 POSDIV.textContent = "Do you have Polycystic Ovarian Syndrome? ";
                 let POSInputRadio1 = document.createElement("input");
                 POSInputRadio1.name = "POS";
@@ -317,27 +338,37 @@ function nextHandler() {
             }
             break;
         case 2:
-            if (!check(obesity, bloodPressure, familyHistory, TG, lowActivity, IGT)) {
+            if (obesity === "error") {
+                check(false);
                 return;
             }
-            if (gender === "female") {
-                if (!check(gestational, POS)) {
-                    return;
-                }
-            }
-            next.textContent = "Submit";
+//            if (!check(obesity, bloodPressure, familyHistory, TG, lowActivity, IGT)) {
+//                return;
+//            }
+//            if (gender === "female") {
+//                if (!check(gestational, POS)) {
+//                    return;
+//                }
+//            }
+            next.textContent = "View >";
             break;
         case 3:
-            if (!check(headache, BV, EU, TG, polydipsia, LC, NV, polyphagia, tiredness, LW, FST, FI, sensation, coldSweat)) {
-                return;
-            }
+//            if (!check(headache, BV, EU, TG, polydipsia, LC, NV, polyphagia, tiredness, LW, FST, FI, sensation, coldSweat)) {
+//                return;
+//            }
             submit();
+            navItems[count].classList.remove("lgt-primary-text");
+//            navItems[count + 1].classList.add("lgt-primary-text");
             return;
     }
     
     // show next question field
-    fieldsets[count].style.display = "none";
-    fieldsets[count + 1].style.display = "block";
+    navItems[count].classList.remove("lgt-primary-text");
+    navItems[count + 1].classList.add("lgt-primary-text");
+//    fieldsets[count].style.display = "none";
+//    fieldsets[count + 1].style.display = "block";
+    pages[count].className = ("lgt-card page stage-left");
+    pages[count + 1].className = ("lgt-card page stage-center");
     count++;
 }
 
@@ -364,13 +395,60 @@ function submit() {
     xhttp.onreadystatechange = function() {
         if (this.readyState === 4 && this.status === 200) {
             let result = JSON.parse(this.responseText);
-            fieldsets[3].style.display = "none";
-            next.style.display = "none";
-            let resultDiv = document.querySelector("#result");
-            let key;
-            for(key in result) {
-                resultDiv.innerHTML += key + ": " + result[key] + "<br/>";
+            if (pregnant !== "yes") {
+                result["gestational-diabetes"] = 0;
             }
+            
+//            fieldsets[3].style.display = "none";
+            pages[3].className = ("lgt-card page stage-left");
+            pages[4].className = ("lgt-card page stage-center");
+            
+            next.style.display = "none";
+            let resultDiv = document.querySelector(".result");
+            
+            if (result["diabetes-type-I"] < 0) {
+                result["diabetes-type-I"] = 0;
+            }
+            if (result["diabetes-type-II"] < 0) {
+                result["diabetes-type-II"] = 0;
+            }
+            if (result["gestational-diabetes"] < 0) {
+                result["gestational-diabetes"] = 0;
+            }
+            if (result["diabetes-type-I"] > 0) {
+                resultDiv.innerHTML = "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["diabetes-type-I"]*100) + "%</b> chance of having diabetes-type-I<br/>";
+            }
+            if (result["diabetes-type-II"] > 0) {
+                resultDiv.innerHTML = "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["diabetes-type-II"]*100) + "%</b> chance of having diabetes-type-II<br/>";
+            }
+            if (result["gestational-diabetes"] > 0) {
+                resultDiv.innerHTML = "<em class='bullet bullet-pink'></em>You have <b>" + parseInt(result["gestational-diabetes"]*100) + "%</b> chance of having gestational-diabetes<br/>";
+            }
+//            resultDiv.innerHTML += "diabetes-type-I: " + result["diabetes-type-I"]*100 + "%<br/>";
+//            resultDiv.innerHTML += "diabetes-type-II: " + result["diabetes-type-II"]*100 + "%<br/>";
+//            resultDiv.innerHTML += "gestational-diabetes: " + result["gestational-diabetes"]*100 + "%<br/>";
+            
+            let recommendationDiv = document.querySelector(".recommendation");
+            let recommendation = "";
+            if (result["healthy"] == 1) {
+                recommendation = "Congratulation! You are healthy!"
+            }
+            if (result["more-consideration"] == 1) {
+                recommendation = "You should seek further medical consultation!"
+            }
+            if (result["at-risk"] == 1) {
+                recommendation = "Warning! You are at risk of having diabetes."
+            }
+            let key;
+            let allZero = 0;
+            for(key in result) {
+//                resultDiv.innerHTML += key + ": " + result[key]*100 + "%<br/>";
+                allZero += result[key];
+            }
+            if (allZero === 0) {
+                recommendation = "Not enough information."
+            }
+            recommendationDiv.innerHTML = "<em class='bullet bullet-blue'></em>" + recommendation;
         }
     };
     xhttp.open("POST", "Recommend", true);
@@ -382,9 +460,10 @@ function submit() {
 function getValue(obj) {
     switch(obj.name) {
         case "age":
-            age = obj.value;
-            checkNumber(obj, age);
-            console.log(age);
+            if (checkNumber(obj, 1)) {
+                age = obj.value;
+                console.log(age);
+            }
             break;
         case "gender":
             gender = obj.value;
@@ -395,24 +474,48 @@ function getValue(obj) {
             console.log(pregnant);
             break;
         case "OGTT":
-            OGTT = obj.value;
-            checkNumber(obj, OGTT);
-            console.log(OGTT);
+            if (obj.value === "") {
+                break;
+            }
+            if (checkNumber(obj, 2)) {
+                OGTT = obj.value;
+                console.log(OGTT);
+            } else {
+                OGTT = "error";
+            }
             break;
         case "FPG":
-            FPG = obj.value;
-            checkNumber(obj, FPG);
-            console.log(FPG);
+            if (obj.value === "") {
+                break;
+            }
+            if (checkNumber(obj, 2)) {
+                FPG = obj.value;
+                console.log(FPG);
+            } else {
+                FPG = "error";
+            }
             break;
         case "CPG":
-            CPG = obj.value;
-            checkNumber(obj, CPG);
-            console.log(CPG);
+            if (obj.value === "") {
+                break;
+            }
+            if (checkNumber(obj, 2)) {
+                CPG = obj.value;
+                console.log(CPG);
+            } else {
+                CPG = "error";
+            }
             break;
         case "obesity":
-            obesity = obj.value;
-            checkNumber(obj, obesity);
-            console.log(obesity);
+            if (obj.value === "") {
+                break;
+            }
+            if (checkNumber(obj, 2)) {
+                obesity = obj.value;
+                console.log(obesity);
+            } else {
+                obesity = "error";
+            }
             break;
         case "blood-pressure":
             bloodPressure = obj.value;
